@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: atlantis
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '10'
+spec:
+  project: default
+  source:
+    repoURL: https://runatlantis.github.io/helm-charts
+    chart: atlantis
+    targetRevision: 4.11.2
+    helm:
+      values: |-
+        ingress:
+          enabled: true
+          annotations:
+            <CERT_MANAGER_ISSUER_ANNOTATION_1>
+            <CERT_MANAGER_ISSUER_ANNOTATION_2>
+            <CERT_MANAGER_ISSUER_ANNOTATION_3>
+            <CERT_MANAGER_ISSUER_ANNOTATION_4>
+          path: /
+          host: atlantis.<DOMAIN_NAME>
+          ingressClassName: "nginx"
+          tls:
+            - secretName: atlantis-tls
+              hosts:
+                - atlantis.<DOMAIN_NAME>
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: atlantis
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        maxDuration: 5m0s
+        factor: 2

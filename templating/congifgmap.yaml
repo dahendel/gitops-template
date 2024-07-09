@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: [[ index .CustomTemplateValues  "example-cm" ]]
-  namespace: [[ index .CustomTemplateValues "namespace" ]]
+  name: << index .CustomTemplateValues  "example-cm" >>
+  namespace: << index .CustomTemplateValues "namespace" >>
   annotations:
     source_repo: <GITOPS_REPO_URL>
 data:
-  [[- range $key, $val := $.CustomTemplateValues.exampleCmData ]]
-    [[ $key ]]: [[ $key ]]
-    [[- end ]]
+  <<- range $key, $val := $.CustomTemplateValues.exampleCmData >>
+  << $key >>: << $key >>
+  <<- end >>

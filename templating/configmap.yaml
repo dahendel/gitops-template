@@ -7,5 +7,5 @@ metadata:
     source_repo: <GITOPS_REPO_URL>
 data:
   <<- range $key, $val := $.CustomTemplateValues.exampleCmData >>
-  << $key >>: << $key >>
+  << $key >>: << $val >>
   <<- end >>

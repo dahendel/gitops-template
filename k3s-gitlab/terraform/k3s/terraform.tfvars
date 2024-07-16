@@ -1,5 +1,5 @@
-list_servers_private_ips = <K3S_SERVERS_PRIVATE_IPS>
-list_servers_public_ips  = <K3S_SERVERS_PUBLIC_IPS>
+list_servers_private_ips = ${k1 toJson .K3sServersPrivateIps }
+list_servers_public_ips  = ${k1 toJson .K3sServersPublicIps }
 ssh_user                 = "<SSH_USER>"
 ssh_private_key          = "<SSH_PRIVATE_KEY_PATH>"
-servers_args             = <K3S_SERVERS_ARGS>
+servers_args             = ${k1 toJson .K3sServersArgs }
